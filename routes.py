@@ -1,3 +1,6 @@
+# Imports from established libraries.
+from datetime import timedelta
+
 from flask import (
     Flask,
     render_template,
@@ -6,17 +9,6 @@ from flask import (
     url_for,
     session
 )
-
-from datetime import timedelta
-from sqlalchemy.exc import (
-    IntegrityError,
-    DataError,
-    DatabaseError, 
-    InterfaceError,
-    InvalidRequestError,
-)
-from werkzeug.routing import BuildError
-
 
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 
@@ -29,6 +21,17 @@ from flask_login import (
     login_required,
 )
 
+from sqlalchemy.exc import (
+    IntegrityError,
+    DataError,
+    DatabaseError, 
+    InterfaceError,
+    InvalidRequestError,
+)
+
+from werkzeug.routing import BuildError
+
+# imports from files that we wrote for this.
 from app import create_app, db, login_manager, bcrypt
 from models import User
 from forms import login_form, register_form

@@ -5,16 +5,15 @@ from wtforms import (
     IntegerField,
     DateField,
     TextAreaField,
+    ValidationError,
+    validators,
 )
 
 from flask_wtf import FlaskForm
 from wtforms.validators import InputRequired, Length, EqualTo, Email, Regexp, Optional
 import email_validator
 from flask_login import current_user
-from wtforms import ValidationError, validators
 from models import User
-
-
 
 class login_form(FlaskForm):
     email = StringField(validators=[InputRequired(), Email(), Length(1, 64)])
@@ -23,7 +22,6 @@ class login_form(FlaskForm):
     username= StringField(
         validators=[Optional()]
     )
-
 
 class register_form(FlaskForm):
     username = StringField(
