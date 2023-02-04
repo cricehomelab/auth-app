@@ -1,3 +1,4 @@
+
 def deploy():
     """ Run Deployment Tasks """
     from app import create_app, db
@@ -8,6 +9,7 @@ def deploy():
     app.app_context().push()
     db.create_all()
 
+    # migrate database to latest version
     init()
     stamp()
     migrate()
