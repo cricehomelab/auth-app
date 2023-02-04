@@ -21,7 +21,7 @@ class login_form(FlaskForm):
     pwd = PasswordField(validators=[InputRequired(), Email(), Length(min=8, max=72)])
     # Placeholder labels to enable form rendering
     username= StringField(
-        Validators=[Optional()]
+        validators=[Optional()]
     )
 
 

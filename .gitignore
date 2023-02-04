@@ -3,6 +3,5 @@ __pycache__
 database.db
 alembic.ini
 migrations
-env.py
 README
 script.py.mako

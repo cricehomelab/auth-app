@@ -36,7 +36,7 @@
                 {% endfor %}
                 {% endif %}
                 <div class="form-group mb-3">
-                    {{ form.email(class_="form-control", pllaceholder="Email") }}
+                    {{ form.email(class_="form-control", placeholder="Email") }}
                 </div>
                 {% for error in form.email.errors %}
                 <div class="form-group mb-3">
@@ -55,7 +55,7 @@
                 {% endfor %}
                 {% if request.path == '/register/' %}
                 <div class="form-group mb-3">
-                    {{ form.cpwed(class_="form--control",placeholder="Confirm Password") }}
+                    {{ form.cpwd(class_="form-control",placeholder="Confirm Password") }}
                 </div>
                 {% for error in form.cpwd.errors %}
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
