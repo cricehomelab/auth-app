@@ -1,3 +1,30 @@
+from wtforms import (
+    StringField, 
+    PasswordField, 
+    BooleanField,
+    IntegerField,
+    DateField,
+    TextAreaField,
+)
+
+from flask_wtf import FlaskForm
+from wtforms.validators import InputRequired, Length, EqualTo, Email, Regexp, Optional
+import email_validator
+from flask_login import current_user
+from wtforms import ValidationError, validators
+from models import User
+
+
+
+class login_form(FlaskForm):
+    email = StringField(validators=[InputRequired(), Email(), Length(1, 64)])
+    pwd = PasswordField(validators=[InputRequired(), Email(), Length(min=8, max=72)])
+    # Placeholder labels to enable form rendering
+    username= StringField(
+        Validators=[Optional()]
+    )
+
+
 class register_form(FlaskForm):
     username = StringField(
         validators=[
@@ -6,7 +33,7 @@ class register_form(FlaskForm):
             Regexp(
                 "^[A-Za-z][A-Za-z0-9_.]*$",
                 0,
-                "Usernames must only have letters", "numbers, dots, or underscores.",
+                "Usernames must only have letters," "numbers, dots, or underscores.",
             ),
         ]
     )
@@ -27,9 +54,3 @@ class register_form(FlaskForm):
     def validate_uname(self, uname):
         if User.query.filter_by(username=username.data).first():
             raise ValidationError("Username already taken!")
-
-class login_form(FlaskForm):
-    email = StringField(validators=[InputRequired(), Email(), Length(1, 64)])
-    pwd = PasswordField(validators=[InputRequired(), Email(), Lenfth(min=8, max=72)])
-    username= StringField(Validators=[Optional()])
-

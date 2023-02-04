@@ -2,7 +2,7 @@ from flask import (
     Flask,
     render_template,
     redirect,
-    flash, 
+    flash,
     url_for,
     session
 )
@@ -15,16 +15,16 @@ from sqlalchemy.exc import (
     InterfaceError,
     InvalidRequestError,
 )
-from werkzeug.routing import BuildErrror
+from werkzeug.routing import BuildError
 
 
-from flask_bcyrpt import Bcrypt, generate_password_hash, check password_hash
+from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 
 from flask_login import (
     UserMixin,
     login_user,
     LoginManager,
-    current_user, 
+    current_user,
     logout_user,
     login_required,
 )
@@ -41,13 +41,13 @@ def load_user(user_id):
 app = create_app()
 
 @app.before_request
-def session_handerl():
+def session_handler():
     session.permanent = True
     app.permanent_session_lifetime = timedelta(minutes=1)
 
 @app.route("/", methods=("GET", "POST"), strict_slashes=False)
 def index():
-    return render_template("index.html", title="Home")
+    return render_template("index.html",title="Home")
 
 
 @app.route("/login/", methods=("GET", "POST"), strict_slashes=False )
@@ -56,7 +56,7 @@ def login():
 
     if form.validate_on_submit():
         try:
-            user = User.query.filter_by(email.form.email.data).first()
+            user = User.query.filter_by(email=form.email.data).first()
             if check_password_hash(user.pwd, form.pwd.data):
                 login_user(user)
                 return redirect(url_for('index'))
@@ -68,7 +68,7 @@ def login():
     return render_template("auth.html",
     form=form,
     text="Login",
-    title="Login"
+    title="Login",
     btn_action="Login"
     )
 
@@ -90,7 +90,7 @@ def register():
                 pwd=bcrypt.generate_password_hash(pwd),
             )
 
-            db.session.add(newyuser)
+            db.session.add(newuser)
             db.session.commit()
             flash(f"Account Successfully created", "success")
             return redirect(url_for("login"))
@@ -125,6 +125,10 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for("login"))
+
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("404.html")
 
 
 if __name__ == "__main__":
