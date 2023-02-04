@@ -53,9 +53,11 @@ def index():
 @app.route("/login/", methods=("GET", "POST"), strict_slashes=False )
 def login():
     form = login_form()
+    print(form)
 
     if form.validate_on_submit():
         try:
+            print(f"Email being searched for: {form.email.data}")
             user = User.query.filter_by(email=form.email.data).first()
             if check_password_hash(user.pwd, form.pwd.data):
                 login_user(user)
@@ -81,8 +83,11 @@ def register():
     if form.validate_on_submit():
         try:
             email = form.email.data
+            print(email)
             pwd = form.pwd.data
+            print(pwd)
             username = form.username.data
+            print(username)
 
             newuser = User(
                 username=username,

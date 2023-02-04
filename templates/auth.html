@@ -39,7 +39,7 @@
                     {{ form.email(class_="form-control", placeholder="Email") }}
                 </div>
                 {% for error in form.email.errors %}
-                <div class="form-group mb-3">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     {{ error }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
@@ -50,7 +50,7 @@
                 {% for error in form.pwd.errors %}
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     {{ error }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>                    
                 </div>
                 {% endfor %}
                 {% if request.path == '/register/' %}
@@ -60,7 +60,7 @@
                 {% for error in form.cpwd.errors %}
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     {{ error }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">5</button>
                 </div>
                 {% endfor %}
                 {% endif %}
