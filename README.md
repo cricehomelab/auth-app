@@ -9,4 +9,3 @@ Current goals:
 
 1. Create better User model for db that would include a number of different features for a user.
 2. Create an Admin panel that will allow admins to activate de-activate different features.
-3. Work out a way to plug in different features to the tool. 
