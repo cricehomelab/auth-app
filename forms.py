@@ -24,14 +24,25 @@ class login_form(FlaskForm):
     )
 
 class register_form(FlaskForm):
-    username = StringField(
+    first_name = StringField(
         validators=[
             InputRequired(),
-            Length(3, 20, message="Please provide a valid name"),
+            Length(1, 140, message="Please provide a valid name"),
             Regexp(
-                "^[A-Za-z][A-Za-z0-9_.]*$",
+                "([A-Z])\w+",
                 0,
-                "Usernames must only have letters," "numbers, dots, or underscores.",
+                "first names must only have letters.",
+            ),
+        ]
+    )
+    last_name = StringField(
+        validators=[
+            InputRequired(),
+            Length(1, 140, message="Please provide a valid name"),
+            Regexp(
+                "([A-Z])\w+",
+                0,
+                "Usernames must only have letters.",
             ),
         ]
     )
@@ -44,6 +55,8 @@ class register_form(FlaskForm):
             EqualTo("pwd", message="Passwords must match!")
         ]
     )
+    is_admin = IntegerField(validators=[InputRequired(), Length(1, 2)])
+    is_active = IntegerField(validators=[InputRequired(), Length(1, 2)])
 
     def validate_email(self, email):
         if User.query.filter_by(email=email.data).first():
