@@ -5,6 +5,7 @@ from wtforms import (
     IntegerField,
     DateField,
     TextAreaField,
+    RadioField,
     ValidationError,
     validators,
 )
@@ -29,7 +30,7 @@ class register_form(FlaskForm):
             InputRequired(),
             Length(1, 140, message="Please provide a valid name"),
             Regexp(
-                "([A-Z])\w+",
+                "^[A-Za-z]+$",
                 0,
                 "first names must only have letters.",
             ),
@@ -40,13 +41,24 @@ class register_form(FlaskForm):
             InputRequired(),
             Length(1, 140, message="Please provide a valid name"),
             Regexp(
-                "([A-Z])\w+",
+                "^[A-Za-z]+$",
                 0,
                 "Usernames must only have letters.",
             ),
         ]
     )
     email = StringField(validators=[InputRequired(), Email(), Length(1, 64)])
+    username = StringField(
+        validators=[
+            InputRequired(),
+            Length(1, 140, message="Please provide a valid name"),
+            Regexp(
+                "^[A-Za-z0-9]+$",
+                0,
+                "Usernames must only have letters and numbers.",
+            ),
+        ]
+    )
     pwd = PasswordField(validators=[InputRequired(), Length(8, 72)])
     cpwd = PasswordField(
         validators=[
@@ -55,8 +67,10 @@ class register_form(FlaskForm):
             EqualTo("pwd", message="Passwords must match!")
         ]
     )
-    is_admin = IntegerField(validators=[InputRequired(), Length(1, 2)])
-    is_active = IntegerField(validators=[InputRequired(), Length(1, 2)])
+    is_admin = RadioField('Is user an admin?', choices=[("admin", 1), ("user", 0)])
+    is_active = RadioField('Is user active?', choices=[("Active", 1), ("Inactive", 0)])
+
+    # End Register Form.
 
     def validate_email(self, email):
         if User.query.filter_by(email=email.data).first():
