@@ -26,6 +26,28 @@
 
                 {% if request.path == '/register/' %}
                 <div class="form-group mb-3">
+                    {{ form.first_name(class_="form-control",placeholder="First Name") }}
+                </div>
+                {% for error in form.first_name.errors %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% if request.path == '/register/' %}
+                <div class="form-group mb-3">
+                    {{ form.last_name(class_="form-control",placeholder="Last Name") }}
+                </div>
+                {% for error in form.last_name.errors %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% if request.path == '/register/' %}
+                <div class="form-group mb-3">
                     {{ form.username(class_="form-control",placeholder="Username") }}
                 </div>
                 {% for error in form.username.errors %}
@@ -50,7 +72,7 @@
                 {% for error in form.pwd.errors %}
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     {{ error }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>                    
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 {% endfor %}
                 {% if request.path == '/register/' %}
@@ -63,6 +85,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">5</button>
                 </div>
                 {% endfor %}
+                {% if form.errors %}
+                    <p>{{ form.errors }}</p>
+                {% endif %}
+                <div>
+                    {{ form.is_admin(class_="form-control")}}
+                </div>
+                <div>
+                    {{ form.is_active(class_="form-control")}}
+                </div>
                 {% endif %}
                 <div class="text-center">
 

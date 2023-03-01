@@ -5,6 +5,7 @@ from wtforms import (
     IntegerField,
     DateField,
     TextAreaField,
+    RadioField,
     ValidationError,
     validators,
 )
@@ -24,14 +25,36 @@ class login_form(FlaskForm):
     )
 
 class register_form(FlaskForm):
+    first_name = StringField(
+        validators=[
+            InputRequired(),
+            Length(1, 140, message="Please provide a valid name"),
+            Regexp(
+                "^[A-Za-z]+$",
+                0,
+                "first names must only have letters.",
+            ),
+        ]
+    )
+    last_name = StringField(
+        validators=[
+            InputRequired(),
+            Length(1, 140, message="Please provide a valid name"),
+            Regexp(
+                "^[A-Za-z]+$",
+                0,
+                "Usernames must only have letters.",
+            ),
+        ]
+    )
     username = StringField(
         validators=[
             InputRequired(),
-            Length(3, 20, message="Please provide a valid name"),
+            Length(1, 140, message="Please provide a valid name"),
             Regexp(
-                "^[A-Za-z][A-Za-z0-9_.]*$",
+                "^[A-Za-z0-9]+$",
                 0,
-                "Usernames must only have letters," "numbers, dots, or underscores.",
+                "Usernames must only have letters and numbers.",
             ),
         ]
     )
@@ -41,14 +64,18 @@ class register_form(FlaskForm):
         validators=[
             InputRequired(),
             Length(8,72),
-            EqualTo("pwd", message="Passwords must match!")
+            EqualTo("pwd", message="Passwords must match!") # TODO: not working right now
         ]
     )
+    is_admin = RadioField('Is user an admin?', choices=[("admin", 1), ("user", 0)])
+    is_active = RadioField('Is user active?', choices=[("Active", 1), ("Inactive", 0)])
+
+    # End Register Form.
 
     def validate_email(self, email):
         if User.query.filter_by(email=email.data).first():
             raise ValidationError("Email already registered!")
 
     def validate_uname(self, uname):
-        if User.query.filter_by(username=username.data).first():
+        if User.query.filter_by(username=uname.data).first():
             raise ValidationError("Username already taken!")

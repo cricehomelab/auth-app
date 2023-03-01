@@ -1,7 +1,9 @@
 .venv
+.gitignore
 __pycache__
 database.db
 alembic.ini
 migrations
 README
 script.py.mako
+test.ps1
