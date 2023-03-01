@@ -1,5 +1,6 @@
 # Imports from established libraries.
-from datetime import timedelta, time
+from datetime import timedelta
+import time
 
 from flask import (
     Flask,
@@ -84,17 +85,20 @@ def login():
 def register():
     form = register_form()
     if form.validate_on_submit():
+        print("Hello")
         try:
             first_name = form.first_name.data
             print(first_name)
             last_name = form.last_name.data
             print(last_name)
+            username = form.username.data
+            print(username)
             email = form.email.data
             print(email)
             pwd = form.pwd.data
             print(pwd)
-            username = form.username.data
-            print(username)
+            cpwd = form.cpwd.data
+            print(cpwd)
 
             newuser = User(
                 first_name=first_name,
@@ -132,11 +136,13 @@ def register():
         except BuildError:
             db.session.rollback()
             flash(f"An error occured", "danger")
+    else:
+        print(form.validate_on_submit())
     return render_template("auth.html", 
-    form=form,
-    text="Create account",
-    title="Register",
-    btn_action="Register account"
+        form=form,
+        text="Create Account",
+        title="Register",
+        btn_action="Register account"
     )
 
 @app.route("/logout")

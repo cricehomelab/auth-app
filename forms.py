@@ -47,7 +47,6 @@ class register_form(FlaskForm):
             ),
         ]
     )
-    email = StringField(validators=[InputRequired(), Email(), Length(1, 64)])
     username = StringField(
         validators=[
             InputRequired(),
@@ -59,12 +58,13 @@ class register_form(FlaskForm):
             ),
         ]
     )
+    email = StringField(validators=[InputRequired(), Email(), Length(1, 64)])
     pwd = PasswordField(validators=[InputRequired(), Length(8, 72)])
     cpwd = PasswordField(
         validators=[
             InputRequired(),
             Length(8,72),
-            EqualTo("pwd", message="Passwords must match!")
+            EqualTo("pwd", message="Passwords must match!") # TODO: not working right now
         ]
     )
     is_admin = RadioField('Is user an admin?', choices=[("admin", 1), ("user", 0)])
@@ -77,5 +77,5 @@ class register_form(FlaskForm):
             raise ValidationError("Email already registered!")
 
     def validate_uname(self, uname):
-        if User.query.filter_by(username=username.data).first():
+        if User.query.filter_by(username=uname.data).first():
             raise ValidationError("Username already taken!")
