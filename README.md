@@ -7,7 +7,7 @@ https://github.com/ondiekelijah/User-Authentication-in-Flask
 
 Completed items:
 1. Create better User model for db that would include a number of different features for a user.
-
+2. Created database_baseline.db with a default user and password. 
 
 Current TODO list:
 
