@@ -12,9 +12,13 @@ Completed items:
 Current TODO list:
 
 3. Create an Admin panel that will allow admins to administrate users. (On deck after item 6)
+    - Create user link need removed from sign in page and moved here.
 4. Improve default page with name of application.
 5. Do some UX work to make this look more unique for a login page.
 6. Create a user page. This will be a landing page for a logged in user. (in progress)
+    - Have created a page on login that has a link to logout or go to admin page. 
+    - Need to cleanup the register user page.
+
 7. Implement logging for this. 
     - Make sure log rotation is a thing.
     - Make sure implementation is secure and not logging details we should not.

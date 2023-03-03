@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block content %}
+    {% if current_user.is_authenticated %}
+    <!-- This should only be around if user has authenticated. -->
+    {% if current_user.is_admin%}
+    <!-- This should only be around if user is an admin. -->
+    <p>Admin Page</p>
+
+    {% endif %}
+    {% else %}
+    <!-- Only visibile if user is not authenticated. -->
+
+    <p>this page is only accessible by an admin.</p>
+
+    {% endif %}
+
+{% endblock %}

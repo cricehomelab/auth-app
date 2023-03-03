@@ -4,13 +4,22 @@
 
 <div class="container py-4 text-center">
 
-
     {% if current_user.is_authenticated %}
+    <!--"Home" page for a user that has authenticated.-->
 
     <h1>Welcome {{ current_user.username }}</h1>
+    {% if user.is_admin %}
+
+    <a href="{{ url_for('admin')}}">Admin Page</a>
+
+    {% endif %}
+
+    <br>
     <a href="{{ url_for('logout') }}">Logout</a>
 
+
     {% else %}
+    <!--Default page seen by any visitor to the site.-->
 
     <a href="{{ url_for('logout') }}">Sign In/Sign up</a>
 

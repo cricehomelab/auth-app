@@ -145,6 +145,12 @@ def register():
         btn_action="Register account"
     )
 
+
+@app.route("/admin")
+@login_required
+def admin():
+    return render_template("admin.html")
+
 @app.route("/logout")
 @login_required
 def logout():
