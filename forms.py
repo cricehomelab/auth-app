@@ -67,8 +67,8 @@ class register_form(FlaskForm):
             EqualTo("pwd", message="Passwords must match!") # TODO: not working right now
         ]
     )
-    is_admin = RadioField('Is user an admin?', choices=[("admin", 1), ("user", 0)])
-    is_active = RadioField('Is user active?', choices=[("Active", 1), ("Inactive", 0)])
+    is_admin = RadioField('Is user an admin?', choices=[(1, "Admin"), (0, "User")])
+    is_active = RadioField('Is user active?', choices=[(1, "Active"), (0, "Inactive")])
 
     # End Register Form.
 

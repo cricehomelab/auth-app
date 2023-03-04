@@ -30,12 +30,15 @@ from sqlalchemy.exc import (
     InvalidRequestError,
 )
 
+from sqlalchemy import text
+
 from werkzeug.routing import BuildError
 
 # imports from files that we wrote for this.
 from app import create_app, db, login_manager, bcrypt
 from models import User
 from forms import login_form, register_form
+from database_work import update_login_time
 
 
 @login_manager.user_loader
@@ -64,6 +67,8 @@ def login():
             print(f"Email being searched for: {form.email.data}")
             user = User.query.filter_by(email=form.email.data).first()
             if check_password_hash(user.pwd, form.pwd.data):
+                current_time = time.time()
+                #update_login_time(user, current_time, db) # TODO: fix this
                 login_user(user)
                 return redirect(url_for('index'))
             else:
@@ -85,21 +90,19 @@ def login():
 def register():
     form = register_form()
     if form.validate_on_submit():
-        print("Hello")
         try:
+            # setting up variables for the new user model.
             first_name = form.first_name.data
-            print(first_name)
             last_name = form.last_name.data
-            print(last_name)
             username = form.username.data
-            print(username)
             email = form.email.data
-            print(email)
             pwd = form.pwd.data
-            print(pwd)
-            cpwd = form.cpwd.data
-            print(cpwd)
+            is_admin = form.is_admin.data
+            print(f'is_admin {is_admin}')
+            is_active = form.is_active.data
+            print(f'is_active {is_active}')
 
+            # Using the User model to create a new user.
             newuser = User(
                 first_name=first_name,
                 last_name=last_name,
@@ -109,13 +112,16 @@ def register():
                 password_date=time.time(),
                 last_login=time.time(),
                 require_password_set=0,
-                is_admin=1,  # TODO: get this in the form so we don't hardcode this
-                is_active=1, # TODO: get this in the form so we don't hardcode this
+                is_admin=is_admin,
+                is_active=is_active,
             )
 
+            # Commiting user to database.
             db.session.add(newuser)
             db.session.commit()
             flash(f"Account Successfully created", "success")
+
+
             return redirect(url_for("login"))
         
         except InvalidRequestError:

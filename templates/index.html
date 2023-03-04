@@ -8,7 +8,7 @@
     <!--"Home" page for a user that has authenticated.-->
 
     <h1>Welcome {{ current_user.username }}</h1>
-    {% if user.is_admin %}
+    {% if current_user.is_admin %}
 
     <a href="{{ url_for('admin')}}">Admin Page</a>
 

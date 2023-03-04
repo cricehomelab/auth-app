@@ -88,11 +88,15 @@
                 {% if form.errors %}
                     <p>{{ form.errors }}</p>
                 {% endif %}
+
                 <div>
-                    {{ form.is_admin(class_="form-control")}}
+                    <p>Is this user an admin?</p>
+                    {{ form.is_admin(class_="form-check") }}
                 </div>
+                <br>
                 <div>
-                    {{ form.is_active(class_="form-control")}}
+                    <p>Is this user active?</p>
+                    {{ form.is_active(class_="form-check") }}
                 </div>
                 {% endif %}
                 <div class="text-center">
