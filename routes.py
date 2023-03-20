@@ -69,6 +69,7 @@ def login():
             if check_password_hash(user.pwd, form.pwd.data):
                 current_time = time.time()
                 #update_login_time(user, current_time, db) # TODO: fix this
+                print(user)
                 login_user(user)
                 return redirect(url_for('index'))
             else:
